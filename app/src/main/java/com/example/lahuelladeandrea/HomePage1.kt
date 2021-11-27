@@ -3,6 +3,7 @@ package com.example.lahuelladeandrea
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 
 class HomePage1 : AppCompatActivity() {
     private var isAdmin: String = ""
@@ -12,7 +13,8 @@ class HomePage1 : AppCompatActivity() {
         isAdmin = intent.getStringExtra("IS_ADMIN").toString()
     }
 
-    fun redirectoToQA() {
+
+    fun redirectoToQA(boton: View) {
         var intent = Intent(this,QandA::class.java)
         if(isAdmin.toBoolean()){
             intent = Intent(this,QandAAdmin::class.java)

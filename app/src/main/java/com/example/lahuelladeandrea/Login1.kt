@@ -40,14 +40,7 @@ class Login1 : AppCompatActivity() {
                     currentUser = usuario!!
                 }
 
-                if (result.await() != null) {
-
-                    goToHomeActivity(currentUser.isAdmin.toString())
-                } else {
-                    runOnUiThread {
-                        showErrorLoginToast()
-                    }
-                }
+                goToHomeActivity(currentUser.isAdmin.toString())
             }
             println("User in DB: $user")
         }
