@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,25 +19,32 @@ import kotlin.coroutines.CoroutineContext
 
 class QandAAdmin : AppCompatActivity() {
     private lateinit var database: AppDatabase
-    private var questionAdminAdapter: RecyclerView ? = null
+    private lateinit var questionAdminAdapter: RecyclerView
     private var questionList = emptyList<QAModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_qand_aadmin)
 
-        questionAdminAdapter= findViewById<RecyclerView>(R.id.questionAdminRV)
-        LinearLayoutManager(applicationContext).also { questionAdminAdapter?.layoutManager = it }
+        questionAdminAdapter= findViewById(R.id.questionAdminRV)
+        questionAdminAdapter.layoutManager = LinearLayoutManager(this)
 
         database = AppDatabase.getDatabase(this)
 
         database.qa().getQuestions().observe(this, {
 
             questionList = it
+            questionList = questionList.filter { it.answer == "" }
 
-            // Adapter del ListView.
-            val adapter = QuestionAdminAdapter( questionList )
-            questionAdminAdapter?.adapter = adapter
+            if ( questionList.isEmpty() ) {
+                println("No hay preguntas por responder.")
+            } else {
+                // Adapter del ListView.
+                val adapter = QuestionAdminAdapter( questionList )
+                questionAdminAdapter.adapter = adapter
+            }
+
+
 
         })
     }
@@ -60,11 +68,11 @@ class QandAAdmin : AppCompatActivity() {
 
             val questionLabel: TextView = itemView.findViewById(R.id.questionLabel)
             val answerEditText: EditText = itemView.findViewById(R.id.answerEditText)
-            val replyBtn: TextView = itemView.findViewById(R.id.replyBtn)
-            val deleteBtn: TextView = itemView.findViewById(R.id.deleteBtn)
+            val replyBtn: Button = itemView.findViewById(R.id.replyBtn)
+            val deleteBtn: Button = itemView.findViewById(R.id.deleteBtn)
 
             // Seteamos los valores de las preguntas en la tabla (elemento del RecyclerView).
-            @SuppressLint("SetTextI18n")
+
 
             fun binding(question: QAModel) {
                 this.question = question
@@ -81,6 +89,12 @@ class QandAAdmin : AppCompatActivity() {
                         database.qa().putAnswer(question.questionId, answer)
                     }
 
+                }
+
+                deleteBtn.setOnClickListener{
+                    CoroutineScope(Dispatchers.IO).launch {
+                        database.qa().deleteQuestion(question.questionId)
+                    }
                 }
             }
         }

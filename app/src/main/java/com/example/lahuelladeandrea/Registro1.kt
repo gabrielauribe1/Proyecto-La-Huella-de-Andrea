@@ -8,10 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.lahuelladeandrea.database.AppDatabase
 import com.example.lahuelladeandrea.database.UserModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class Registro1 : AppCompatActivity() {
     private lateinit var database: AppDatabase
@@ -20,6 +17,7 @@ class Registro1 : AppCompatActivity() {
     private lateinit var emailInput: EditText
     private lateinit var passwordInput: EditText
     private lateinit var registerButton: Button
+    private lateinit var userModel: UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,10 +57,13 @@ class Registro1 : AppCompatActivity() {
             }
 
 
-            val userModel = UserModel(false, firstName, lastName, email, password)
+            userModel = UserModel(false, firstName, lastName, email, password)
             CoroutineScope(Dispatchers.IO).launch {
-                val user = async { database.users().validationUser(email) }
-                if( user.await() == null) {
+                val result = withContext(Dispatchers.Default) {
+                    database.users().validationUser(email)
+                }
+
+                if( result == null) {
                     database.users().insertUser(userModel)
                     goToHomeActivity()
                 } else {
@@ -80,6 +81,7 @@ class Registro1 : AppCompatActivity() {
 
     private fun goToHomeActivity() {
         val intent = Intent(this,HomePage1::class.java)
+        intent.putExtra("IS_ADMIN", userModel.isAdmin )
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME
         startActivity(intent)
         finish()
