@@ -1,11 +1,11 @@
 package com.example.lahuelladeandrea
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.lahuelladeandrea.database.AppDatabase
 import com.example.lahuelladeandrea.database.UserModel
 import kotlinx.coroutines.*
@@ -35,24 +35,26 @@ class Login1 : AppCompatActivity() {
             // Acción asíncrona (corrutina) para hacer un registro en la BD
 
             CoroutineScope(Dispatchers.IO).launch {
-                val result = async {
-                    database.users().login(email, password)}
+                val result = withContext(Dispatchers.Default) {
+                    database.users().login(email, password)
+                }
 
-                    if(result.await() != null){
-                        currentUser = result.await()
-                        goToHomeActivity(currentUser?.isAdmin.toString())
-                }else
-                    runOnUiThread{
+                if(result != null){
+                    currentUser = result
+                    println("currentUser is Admin: ${ currentUser!!.isAdmin }")
+                    goToHomeActivity()
+                } else {
+                    runOnUiThread {
                         showErrorLoginToast()
                     }
+                }
             }
-            println("User in DB: $user")
         }
     }
 
-    private fun goToHomeActivity(is_admin: String) {
+    private fun goToHomeActivity() {
         val intent = Intent(this,HomePage1::class.java)
-        intent.putExtra("IS_ADMIN", is_admin)
+        intent.putExtra("IS_ADMIN", currentUser!!.isAdmin)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME
         startActivity(intent)
         finish()
