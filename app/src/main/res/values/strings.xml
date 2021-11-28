@@ -45,4 +45,14 @@
     <string name="pregunta">Pregunta</string>
     <string name="first_fragment_label"></string>
     <string name="second_fragment_label"></string>
+    <string name="nosotrasimg">nosotrasimg</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="adjuntar_imagen">Adjuntar Imagen</string>
+    <string name="motivaci_n_imagen">Motivación Imagen</string>
+    <string name="blogimgs">blogimgs</string>
+    <string name="blog_imagen">Blog Imagen</string>
 </resources>

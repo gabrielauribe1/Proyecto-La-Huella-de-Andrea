@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Nosotros">
+    tools:context=".Blog1">
 
     <ImageView
-        android:id="@+id/nosotrasimg"
-        android:layout_width="529dp"
-        android:layout_height="692dp"
-        android:contentDescription="@string/nosotrasimg"
+        android:id="@+id/blogimg"
+        android:layout_width="472dp"
+        android:layout_height="637dp"
+        android:contentDescription="@string/blogimgs"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/nosotrasimagen"
-        tools:ignore="ImageContrastCheck" />
+        app:srcCompat="@drawable/blogimg" />
 </androidx.constraintlayout.widget.ConstraintLayout>

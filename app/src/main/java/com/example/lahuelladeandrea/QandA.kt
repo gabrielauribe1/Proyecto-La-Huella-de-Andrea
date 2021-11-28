@@ -17,6 +17,7 @@ class QandA : AppCompatActivity() {
     private lateinit var database: AppDatabase
     private var questionList = mutableListOf<QAModel>()
     private lateinit var questionET: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_qand)
@@ -32,17 +33,16 @@ class QandA : AppCompatActivity() {
             // Adapter del ListView.
             val adapter = QAAdapter( questionList )
             qaRV?.adapter = adapter
-
         })
-
-
     }
 
+    /*Función para agregar pregunta a la base de datos*/
     fun addQuestion(button: View) {
         val question = QAModel(questionET.text.toString(), "")
         database.qa().insertQuestion(question)
     }
 
+    /*Clase que crea adaptador y actualiza el RecyclerView*/
     private inner class QAAdapter(var list: List<QAModel>): RecyclerView.Adapter<QandA.QAHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QandA.QAHolder {
             val holder = layoutInflater.inflate(R.layout.qa_question, parent, false)
@@ -59,6 +59,7 @@ class QandA : AppCompatActivity() {
         }
     }
 
+    /*Clase que crea el holder y actualiza el RecyclerView*/
     private inner class QAHolder(vista: View): RecyclerView.ViewHolder(vista) {
         private val questionTV = itemView.findViewById<TextView>(R.id.pregunta)
 

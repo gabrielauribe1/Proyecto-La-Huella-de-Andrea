@@ -15,7 +15,7 @@ class Login1 : AppCompatActivity() {
     private var user:UserModel? = null
     private lateinit var emailInput: EditText
     private lateinit var passwordInput: EditText
-    private lateinit var currentUser: UserModel
+    private var currentUser: UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +36,15 @@ class Login1 : AppCompatActivity() {
 
             CoroutineScope(Dispatchers.IO).launch {
                 val result = async {
-                    val usuario= database.users().login(email, password)
-                    currentUser = usuario!!
-                }
+                    database.users().login(email, password)}
 
-                goToHomeActivity(currentUser.isAdmin.toString())
+                    if(result.await() != null){
+                        currentUser = result.await()
+                        goToHomeActivity(currentUser?.isAdmin.toString())
+                }else
+                    runOnUiThread{
+                        showErrorLoginToast()
+                    }
             }
             println("User in DB: $user")
         }

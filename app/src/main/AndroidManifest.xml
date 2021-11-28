@@ -10,6 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LaHuellaDeAndrea">
         <activity
+            android:name=".NoEstasSola"
+            android:exported="false" />
+        <activity
+            android:name=".BlogAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".Blog1"
+            android:exported="false" />
+        <activity
+            android:name=".MotivacionAdmin"
+            android:exported="false" />
+        <activity
             android:name=".QandAAdmin"
             android:exported="false" />
         <activity
@@ -19,15 +31,6 @@
             android:theme="@style/Theme.LaHuellaDeAndrea.NoActionBar" />
         <activity
             android:name=".Nosotros"
-            android:exported="false" />
-        <activity
-            android:name=".Noticias"
-            android:exported="false" />
-        <activity
-            android:name=".Motivacion"
-            android:exported="false" />
-        <activity
-            android:name=".Historias"
             android:exported="false" />
         <activity
             android:name=".QandA"
@@ -41,10 +44,6 @@
         <activity
             android:name=".Registro1"
             android:exported="false" />
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

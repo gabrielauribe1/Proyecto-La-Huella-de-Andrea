@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 
-// El Dao es una interfaz que nos permite interactuar con los datos almacenados en la BD de Room, usando SQL
+/*Dao es una interfaz que permite interactuar con los datos almacenados en la base de datos de Room, usando querys SQL*/
 @Dao
 interface QADao {
     @Query("SELECT * FROM QA")

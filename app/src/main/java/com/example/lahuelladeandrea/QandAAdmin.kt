@@ -43,13 +43,13 @@ class QandAAdmin : AppCompatActivity() {
 
     private inner class QuestionAdminAdapter(var questions: List<QAModel>): RecyclerView.Adapter<QuestionAdminAdapter.QuestionAdminHolder>() {
 
-        //Seteamos el layout del item
+        //Seteamos el layout de la pregunta
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionAdminHolder {
             val holder = layoutInflater.inflate(R.layout.question_admin_holder,parent,false)
             return QuestionAdminHolder(holder)
         }
 
-        // Seteamos el número de elementos que tendrá el Recycler View a través de la longitud de la lista del inventario.
+        // Seteamos el número de preguntas (elementos) que tendrá el RecyclerView a través de la longitud de la lista.
         override fun getItemCount(): Int {
             return questions.size
         }
@@ -63,7 +63,7 @@ class QandAAdmin : AppCompatActivity() {
             val replyBtn: TextView = itemView.findViewById(R.id.replyBtn)
             val deleteBtn: TextView = itemView.findViewById(R.id.deleteBtn)
 
-            // Seteamos los valores de la cosa en la tabla ( item del RecyclerView ).
+            // Seteamos los valores de las preguntas en la tabla (elemento del RecyclerView).
             @SuppressLint("SetTextI18n")
 
             fun binding(question: QAModel) {
@@ -86,7 +86,7 @@ class QandAAdmin : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: QuestionAdminHolder, position: Int) {
-            holder.binding(questions[position]) // Ligamos la posesión (cosa) con la función binding del ThingHolder.
+            holder.binding(questions[position]) // Ligamos la posesión (questions) con la función binding del holder.
         }
     }
 }
