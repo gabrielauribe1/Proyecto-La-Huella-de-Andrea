@@ -15,7 +15,7 @@ class QandA : AppCompatActivity() {
     private lateinit var qaRV: RecyclerView
     private var adaptador: QAAdapter? = null
     private lateinit var database: AppDatabase
-    private var questionList = emptyList<QAModel>()
+    private var questionList = mutableListOf<QAModel>()
     private lateinit var questionET: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +27,8 @@ class QandA : AppCompatActivity() {
         questionET = findViewById(R.id.preguntatxt)
         database.qa().getQuestions().observe(this, {
 
-            questionList = it
-
+            questionList = it as MutableList<QAModel>
+            // questionList.filter {  }
             // Adapter del ListView.
             val adapter = QAAdapter( questionList )
             qaRV?.adapter = adapter
